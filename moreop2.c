@@ -33,7 +33,7 @@ void op_mod(stack_t **head, unsigned int line)
 /**
  * op_pchar - prints the char at the top of the stack, followed by a new line
  * @head: pointer to the top of the stack
- * @line: line number in main function where op_push where called
+ * @line: line number where op_pchar where called
  *
  */
 void op_pchar(stack_t **head, unsigned int line)
@@ -61,7 +61,7 @@ void op_pchar(stack_t **head, unsigned int line)
 /**
  * op_pstr - prints the string starting at the top of the stack
  * @head: pointer to the top of the stack
- * @line: line number in main function where op_push where called
+ * @line: line number where op_pstr where called
  *
  */
 void op_pstr(stack_t **head, unsigned int line)
@@ -85,4 +85,28 @@ void op_pstr(stack_t **head, unsigned int line)
 		current = current->next;
 	}
 	putchar('\n');
+}
+/**
+ * op_rotl - rotates the stack to the top
+ * @head: pointer to the top of the stack
+ * @line: line number where op_rotl where called
+ *
+ */
+void op_rotl(stack_t **head, unsigned int line)
+{
+	stack_t *current;
+
+	(void)line;
+	current = *head;
+	if (stack_len(*head) < 2)
+		return;
+	while (current->next != NULL)
+	{
+		current = current->next;
+	}
+	current->next = *head;
+	current->next->prev = current;
+	*head = (*head)->next;
+	current->next->next = NULL;
+	(*head)->prev = NULL;
 }
