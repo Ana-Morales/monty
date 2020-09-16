@@ -80,11 +80,9 @@ void op_pstr(stack_t **head, unsigned int line)
 	{
 		number = current->n;
 		if (number <= 0 || number > 127)
-		{
-			putchar('\n');
-			return;
-		}
+			break;
 		putchar(number);
 		current = current->next;
 	}
+	putchar('\n');
 }
