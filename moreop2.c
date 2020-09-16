@@ -58,3 +58,33 @@ void op_pchar(stack_t **head, unsigned int line)
 	putchar(number);
 	putchar('\n');
 }
+/**
+ * op_pstr - prints the string starting at the top of the stack
+ * @head: pointer to the top of the stack
+ * @line: line number in main function where op_push where called
+ *
+ */
+void op_pstr(stack_t **head, unsigned int line)
+{
+	stack_t *current;
+	int number;
+
+	(void)line;
+	current = *head;
+	if (*head == NULL)
+	{
+		putchar('\n');
+		return;
+	}
+	while (current != NULL)
+	{
+		number = current->n;
+		if (number <= 0 || number > 127)
+		{
+			putchar('\n');
+			return;
+		}
+		putchar(number);
+		current = current->next;
+	}
+}
