@@ -30,3 +30,31 @@ void op_mod(stack_t **head, unsigned int line)
 	*head = (*head)->next;
 	free(node);
 }
+/**
+ * op_pchar - prints the char at the top of the stack, followed by a new line
+ * @head: pointer to the top of the stack
+ * @line: line number in main function where op_push where called
+ *
+ */
+void op_pchar(stack_t **head, unsigned int line)
+{
+	int number;
+
+	if (*head == NULL)
+	{
+		fprintf(stderr, "L%d: can't pchar, stack empty\n", line);
+		free_stack(*head);
+		fclose(global.file);
+		exit(EXIT_FAILURE);
+	}
+	number = (*head)->n;
+	if (number < 32 || number > 127)
+	{
+		fprintf(stderr, "L%d: can't pchar, value out of range\n", line);
+		free_stack(*head);
+		fclose(global.file);
+		exit(EXIT_FAILURE);
+	}
+	putchar(number);
+	putchar('\n');
+}
