@@ -10,7 +10,8 @@ int main(int argc, char **argv)
 	char buff[512], *args[100];
 	char *err = "unknown instruction";
 	stack_t *head = NULL;
-	void (*fp)(stack_t **stack, unsigned int line_number);
+	void (*fp)(stack_t **stack, unsigned int line);
+	int ln = 0;
 
 	if (argc != 2)
 	{
@@ -26,18 +27,19 @@ int main(int argc, char **argv)
 	while (fgets(buff, sizeof(buff), global.file))
 	{
 		token_func(buff, args);
+		ln++;
 		if (args[0] == NULL)
 			continue;
 		global.num = args[1];
 		fp = get_op_func(args[0]);
 		if (fp == NULL)
 		{
-			fprintf(stderr, "L%d: %s %s\n", __LINE__, err, args[0]);
+			fprintf(stderr, "L%d: %s %s\n", ln, err, args[0]);
 			fclose(global.file);
 			free_stack(head);
 			exit(EXIT_FAILURE);
 		}
-		fp(&head, __LINE__);
+		fp(&head, ln);
 	}
 	fclose(global.file);
 	free_stack(head);
