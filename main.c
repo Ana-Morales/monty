@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	{
 		token_func(buff, args);
 		ln++;
-		if (args[0] == NULL || (strcmp(args[0], "#") == 0))
+		if (args[0] == NULL || *args[0] == '#')
 			continue;
 		global.num = args[1];
 		fp = get_op_func(args[0]);
