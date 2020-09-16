@@ -48,7 +48,7 @@ void op_pchar(stack_t **head, unsigned int line)
 		exit(EXIT_FAILURE);
 	}
 	number = (*head)->n;
-	if (number < 32 || number >= 127)
+	if (number < 0 || number >= 127)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line);
 		free_stack(*head);
