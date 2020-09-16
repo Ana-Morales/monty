@@ -68,6 +68,7 @@ void op_mod(stack_t **head, unsigned int line);
 void op_pchar(stack_t **head, unsigned int line);
 void op_pstr(stack_t **head, unsigned int line);
 void op_rotl(stack_t **head, unsigned int line);
+void op_rotr(stack_t **head, unsigned int line);
 
 void token_func(char *buffer, char **args);
 void (*get_op_func(char *ar))(stack_t **stack, unsigned int line);

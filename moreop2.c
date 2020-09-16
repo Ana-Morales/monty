@@ -110,3 +110,27 @@ void op_rotl(stack_t **head, unsigned int line)
 	current->next->next = NULL;
 	(*head)->prev = NULL;
 }
+/**
+ * op_rotr - rotates the stack to the bottom.
+ * @head: pointer to the top of the stack
+ * @line: line number where op_rotr where called
+ *
+ */
+void op_rotr(stack_t **head, unsigned int line)
+{
+	stack_t *current;
+
+	(void)line;
+	current = *head;
+	if (stack_len(*head) < 2)
+		return;
+	while (current->next != NULL)
+	{
+		current = current->next;
+	}
+	current->next = *head;
+	current->prev->next = NULL;
+	current->prev = NULL;
+	(*head)->prev = current;
+	*head = current;
+}
