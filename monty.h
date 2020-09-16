@@ -64,6 +64,7 @@ void op_nop(stack_t **head, unsigned int line);
 void op_sub(stack_t **head, unsigned int line);
 void op_div(stack_t **head, unsigned int line);
 void op_mul(stack_t **head, unsigned int line);
+void op_mod(stack_t **head, unsigned int line);
 
 void token_func(char *buffer, char **args);
 void (*get_op_func(char *ar))(stack_t **stack, unsigned int line);
