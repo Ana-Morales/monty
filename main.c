@@ -7,11 +7,10 @@
  */
 int main(int argc, char **argv)
 {
-	char buff[512], *args[100];
-	char *err = "unknown instruction";
+	char buff[512], *args[100], *err = "unknown instruction";
 	stack_t *head = NULL;
 	void (*fp)(stack_t **stack, unsigned int line);
-	int ln = 0;
+	int ln = 0, m = 0;
 
 	if (argc != 2)
 	{
@@ -24,6 +23,7 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+	global.mode = 0;
 	while (fgets(buff, sizeof(buff), global.file))
 	{
 		token_func(buff, args);
@@ -31,6 +31,9 @@ int main(int argc, char **argv)
 		if (args[0] == NULL || *args[0] == '#')
 			continue;
 		global.num = args[1];
+		m = set_mode(args[0]);
+		if (m == 1)
+			continue;
 		fp = get_op_func(args[0]);
 		if (fp == NULL)
 		{
@@ -45,7 +48,26 @@ int main(int argc, char **argv)
 	free_stack(head);
 	return (0);
 }
-
+/**
+ * set_mode - set mode of working (queue or stack)
+ * @s: string to check if there is a instruction to change the mode
+ *
+ * Return: 1 if mode was set, 0 if not.
+ */
+int set_mode(char *s)
+{
+	if (strcmp(s, "stack") == 0)
+	{
+		global.mode = 0;
+		return (1);
+	}
+	else if (strcmp(s, "queue") == 0)
+	{
+		global.mode = 1;
+		return (1);
+	}
+	return (0);
+}
 /**
  * token_func - function to call strtok function
  * @buffer: buffer with string to be broke into tokens

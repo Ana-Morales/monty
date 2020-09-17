@@ -42,12 +42,14 @@ typedef struct instruction_s
  * struct global_s - structure to store golbal variables of different types
  * @num: string tu convert to int and use it as argument when required
  * @file: file pointer associated with the file opened
+ * @mode: mode of working, 0 for stack, 1 for queue
  *
  */
 typedef struct global_s
 {
 	char *num;
 	FILE *file;
+	int mode;
 } global_t;
 
 extern global_t global;
@@ -70,6 +72,7 @@ void op_pstr(stack_t **head, unsigned int line);
 void op_rotl(stack_t **head, unsigned int line);
 void op_rotr(stack_t **head, unsigned int line);
 
+int set_mode(char *s);
 void token_func(char *buffer, char **args);
 void (*get_op_func(char *ar))(stack_t **stack, unsigned int line);
 int is_number(char *number);

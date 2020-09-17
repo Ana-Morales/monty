@@ -6,15 +6,13 @@
  *
  */
 void op_push(stack_t **head, unsigned int line)
-{
-	stack_t *new;
+{	stack_t *new, *temp = *head;
 	int n;
 	char *ar;
 
 	ar = global.num;
 	if (ar == NULL || is_number(ar) == 0)
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line);
+	{	fprintf(stderr, "L%d: usage: push integer\n", line);
 		free_stack(*head);
 		fclose(global.file);
 		exit(EXIT_FAILURE);
@@ -22,24 +20,32 @@ void op_push(stack_t **head, unsigned int line)
 	n = atoi(ar);
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
+	{	fprintf(stderr, "Error: malloc failed\n");
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
 	new->n = n;
 	if (*head == NULL)
-	{
-		new->next = NULL;
+	{	new->next = NULL;
 		new->prev = NULL;
 		*head = new;
 	}
 	else
 	{
-		(*head)->prev = new;
-		new->next = *head;
-		new->prev = NULL;
-		*head = new;
+		if (global.mode == 0)
+		{	(*head)->prev = new;
+			new->next = *head;
+			new->prev = NULL;
+			*head = new;
+		}
+		else
+		{
+			while (temp->next != NULL)
+			{	temp = temp->next;	}
+			new->next = NULL;
+			new->prev = temp;
+			temp->next = new;
+		}
 	}
 }
 /**
